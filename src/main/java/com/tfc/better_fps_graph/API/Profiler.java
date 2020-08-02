@@ -43,6 +43,22 @@ public class Profiler {
 		start = Util.milliTime();
 	}
 	
+	public static void addSection(String name) {
+		Section section = frame.getSection(lastName);
+		if (Util.milliTime() - start != 0) {
+			if (section == null) {
+				frame.addSection(lastName, new Section(new float[]{(float) sectionR, (float) sectionG, (float) sectionB}, Util.milliTime() - start));
+			} else {
+				section.addTime(Util.milliTime() - start);
+			}
+		}
+		sectionR = (name.length()%255)/255f;
+		sectionG = name.lastIndexOf(name.charAt(name.length()/2));
+		sectionB = name.indexOf(name.charAt(name.length()/3));
+		lastName = name;
+		start = Util.milliTime();
+	}
+	
 	public static void endSection() {
 		Section section = frame.getSection(lastName);
 		if (Util.milliTime() - start != 0) {
