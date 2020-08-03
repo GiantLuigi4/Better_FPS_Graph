@@ -1,7 +1,5 @@
 package com.tfc.better_fps_graph.core;
 
-import java.util.ArrayList;
-
 public class Section {
 	public final float[] color;
 	public long time = 0;
