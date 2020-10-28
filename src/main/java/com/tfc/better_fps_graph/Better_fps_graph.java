@@ -54,11 +54,13 @@ public class Better_fps_graph {
 					
 					if (valueIn == true) {
 						Profiler.addSection("better_fps_graph:Open Graph", 1,1,0);
+						
 						try {
 							Display.disp(frames.get(frames.size() - 1).sections.values());
 						} catch (Throwable ignored) {
 							ignored.printStackTrace();
 						}
+						
 						Profiler.endSection();
 					}
 				}
