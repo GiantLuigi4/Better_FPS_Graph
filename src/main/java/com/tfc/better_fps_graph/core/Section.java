@@ -7,6 +7,9 @@ public class Section {
 	
 	public Section(float[] color, String name, long time) {
 		this.color = color;
+		this.color[0] = ((int) (this.color[0] * 255) & 255) / 255f;
+		this.color[1] = ((int) (this.color[1] * 255) & 255) / 255f;
+		this.color[2] = ((int) (this.color[2] * 255) & 255) / 255f;
 		this.name = name;
 		this.time = time;
 	}

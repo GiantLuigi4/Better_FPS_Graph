@@ -38,36 +38,36 @@ public class Better_fps_graph {
 	long lastRender = Util.milliTime();
 	
 	public Better_fps_graph() {
-			IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		
+		if (FMLEnvironment.dist.isClient()) {
+			System.setProperty("java.awt.headless", "false");
 			
-			if (FMLEnvironment.dist.isClient()) {
-				System.setProperty("java.awt.headless", "false");
-	
-				MinecraftForge.EVENT_BUS.addListener(this::onDrawFPSGraph);
-				MinecraftForge.EVENT_BUS.addListener(this::onDrawWorldLast);
-				//https://github.com/Cadiboo/NoCubes/blob/2cebf4e0e61eac96ab8490d3830f35953a8e9575/src/main/java/io/github/cadiboo/nocubes/client/ClientEventSubscriber.java#L89-L223
-	
-				KeyBinding kb = new KeyBinding("Open the better fps graph window", GLFW.GLFW_KEY_Z, "misc") {
-					@Override
-					public void setPressed(boolean valueIn) {
-						super.setPressed(valueIn);
+			MinecraftForge.EVENT_BUS.addListener(this::onDrawFPSGraph);
+			MinecraftForge.EVENT_BUS.addListener(this::onDrawWorldLast);
+			//https://github.com/Cadiboo/NoCubes/blob/2cebf4e0e61eac96ab8490d3830f35953a8e9575/src/main/java/io/github/cadiboo/nocubes/client/ClientEventSubscriber.java#L89-L223
+			
+			KeyBinding kb = new KeyBinding("Open the better fps graph window", GLFW.GLFW_KEY_Z, "misc") {
+				@Override
+				public void setPressed(boolean valueIn) {
+					super.setPressed(valueIn);
+					
+					if (valueIn == true) {
+						Profiler.addSection("better_fps_graph:Open Graph", 1, 1, 0);
 						
-						if (valueIn == true) {
-							Profiler.addSection("better_fps_graph:Open Graph", 1,1,0);
-							
-							try {
-								Display.disp(frames.get(frames.size() - 1).sections.values());
-							} catch (Throwable ignored) {
-								ignored.printStackTrace();
-							}
-							
-							Profiler.endSection();
+						try {
+							Display.disp(frames.get(frames.size() - 1).sections.values());
+						} catch (Throwable ignored) {
+							ignored.printStackTrace();
 						}
+						
+						Profiler.endSection();
 					}
-				};
-	
-				ClientRegistry.registerKeyBinding(kb);
-			}
+				}
+			};
+			
+			ClientRegistry.registerKeyBinding(kb);
+		}
 		
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
@@ -133,7 +133,7 @@ public class Better_fps_graph {
 		
 		if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
 			if (event instanceof RenderGameOverlayEvent.Pre) {
-				Profiler.addSection("minecraft:Debug",0,0.5,0);
+				Profiler.addSection("minecraft:Debug", 0, 0.5, 0);
 			} else if (event instanceof RenderGameOverlayEvent.Post) {
 				Profiler.endSection();
 			}

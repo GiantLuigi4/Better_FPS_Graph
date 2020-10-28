@@ -15,16 +15,16 @@ public class Display {
 	public void paint(Graphics g) {
 		int y = 0;
 		for (Section s : sections) {
-			Color col = new Color(
-					(int) (s.color[0] * 255),
-					(int) (s.color[1] * 255),
-					(int) (s.color[2] * 255)
+			Color inv = new Color(
+					(int) ((s.color[0] * 255)) & 255,
+					(int) ((s.color[1] * 255)) & 255,
+					(int) ((s.color[2] * 255)) & 255
 			);
 			
-			Color inv = new Color(
-					255 - (int) (s.color[0] * 255),
-					255 - (int) (s.color[1] * 255),
-					255 - (int) (s.color[2] * 255)
+			Color col = new Color(
+					255 - (int) ((s.color[0] * 255)) & 255,
+					255 - (int) ((s.color[1] * 255)) & 255,
+					255 - (int) ((s.color[2] * 255)) & 255
 			);
 			
 			g.setColor(inv);
